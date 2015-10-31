@@ -100,7 +100,14 @@
  */
 - (UIColor *)colorWithAttribuateString:(NSString *)attribuateString {
     NSArray *strings = [attribuateString componentsSeparatedByString:@"_"];
-    return [self colorFromHexString:strings.lastObject alpha:1];
+    UIColor *color;
+    if (strings.count == 3) {
+        color = [self colorFromHexString:strings.lastObject alpha:1];
+    } else {
+        NSLog(@"WARNING--------- color attribuate string isn't comply with the name regular: %@", attribuateString);
+        color = [UIColor blackColor];
+    }
+    return color;
 }
 
 /**

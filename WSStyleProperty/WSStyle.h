@@ -17,6 +17,7 @@
 @property (strong, readonly, nonatomic) UIColor *blueColor_9bb1c8;
 @property (strong, readonly, nonatomic) UIColor *color_ef4206;
 
+
 //Font name must be: font_fontsize
 //               or: font_style_fontsize
 @property (strong, readonly, nonatomic) UIFont *font_18;
@@ -33,4 +34,6 @@
 
 //Not supported
 @property (strong, nonatomic) NSString *title;
+@property (strong, readonly, nonatomic) UIColor *bl9bb1c8;
+
 @end

@@ -14,7 +14,6 @@
 		FE1624281BE4538000CD54C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE1624271BE4538000CD54C8 /* Assets.xcassets */; };
 		FE16242B1BE4538000CD54C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE1624291BE4538000CD54C8 /* LaunchScreen.storyboard */; };
 		FE1624341BE4539200CD54C8 /* WSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1624331BE4539200CD54C8 /* WSStyle.m */; };
-		FE1624371BE48F4A00CD54C8 /* UIColor+Builder.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1624361BE48F4A00CD54C8 /* UIColor+Builder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +29,6 @@
 		FE16242C1BE4538100CD54C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE1624321BE4539200CD54C8 /* WSStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSStyle.h; sourceTree = "<group>"; };
 		FE1624331BE4539200CD54C8 /* WSStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSStyle.m; sourceTree = "<group>"; };
-		FE1624351BE48F4A00CD54C8 /* UIColor+Builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Builder.h"; sourceTree = "<group>"; };
-		FE1624361BE48F4A00CD54C8 /* UIColor+Builder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Builder.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +67,6 @@
 				FE1624221BE4538000CD54C8 /* ViewController.m */,
 				FE1624321BE4539200CD54C8 /* WSStyle.h */,
 				FE1624331BE4539200CD54C8 /* WSStyle.m */,
-				FE1624351BE48F4A00CD54C8 /* UIColor+Builder.h */,
-				FE1624361BE48F4A00CD54C8 /* UIColor+Builder.m */,
 				FE1624241BE4538000CD54C8 /* Main.storyboard */,
 				FE1624271BE4538000CD54C8 /* Assets.xcassets */,
 				FE1624291BE4538000CD54C8 /* LaunchScreen.storyboard */,
@@ -162,7 +157,6 @@
 				FE1624231BE4538000CD54C8 /* ViewController.m in Sources */,
 				FE1624201BE4538000CD54C8 /* AppDelegate.m in Sources */,
 				FE16241D1BE4538000CD54C8 /* main.m in Sources */,
-				FE1624371BE48F4A00CD54C8 /* UIColor+Builder.m in Sources */,
 				FE1624341BE4539200CD54C8 /* WSStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +306,7 @@
 				FE1624311BE4538100CD54C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

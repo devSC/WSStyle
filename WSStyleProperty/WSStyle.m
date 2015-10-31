@@ -7,8 +7,9 @@
 //
 
 #import "WSStyle.h"
-#import "UIColor+Builder.h"
 #import <objc/runtime.h>
+
+
 
 @implementation WSStyle
 
@@ -33,68 +34,82 @@
 
 - (void)_initial {
     
+    //get the propertys list
     unsigned int propertyCount = 0;
     objc_property_t *propertys = class_copyPropertyList([self class], &propertyCount);
     
     for (int i = 0; i < propertyCount; i ++) {
         
+        //get a property
         objc_property_t property = propertys[i];
         const char *propertyName = property_getName(property);
+        //get property name
         NSString *propertyNameString = [NSString stringWithUTF8String:propertyName];
         
-        //类
+        //
         Class class;
         id value;
         
-        //获得属性数组
+        //get the property attribuates list
         unsigned int attribuatedCount = 0;
         objc_property_attribute_t *attribuates = property_copyAttributeList(property, &attribuatedCount);
         for (int j = 0; j < attribuatedCount; j ++) {
+            //get the attribuate
             objc_property_attribute_t attribuate = attribuates[j];
             
+            //get attribuate name and value string
             NSString *attribuateNameString = [NSString stringWithUTF8String:attribuate.name];
             NSString *attribuateValueString = [NSString stringWithUTF8String:attribuate.value];
-//            NSLog(@"name: %s value: %s", attribuate.name, attribuate.value);
 
+            //is class type
             if ([attribuateNameString isEqualToString:@"T"]) {
-                
-                NSString *classString = [attribuateValueString substringWithRange:NSMakeRange(2, attribuateValueString.length - 3)];
-                class = NSClassFromString(classString);
+                //Get class type string
+                NSString *classTypeString = [attribuateValueString substringWithRange:NSMakeRange(2, attribuateValueString.length - 3)];
+                //Save the current class
+                class = NSClassFromString(classTypeString);
             }
-            else if ([attribuateNameString isEqualToString:@"V"]) { //所声明的属性名字
-                
-                //这里判断是什么类型 color 或者还是font等、
-                //This is color
+            // is the value attribuate
+            else if ([attribuateNameString isEqualToString:@"V"]) {
+                //class is UIColor
                 if (class == [UIColor class]) {
+                    //Save the color
                     value = [self colorWithAttribuateString:attribuateValueString];
                 }
+                //class is UIFont
                 else if (class == [UIFont class]) {
+                    //Save the font
                     value = [self fontWithAttribuateString:attribuateValueString];
                 }
                 else {
-                    NSLog(@"#WARNING----- This property dont supported auto get value:%@",propertyNameString);
+                    NSLog(@"#WARNING----- This property dont supported auto set value: %@ class type: %@",propertyNameString, NSStringFromClass(class));
                 }
                 
             }
         }
-        
-        
-        const char *propertyAttribuated = property_getAttributes(property);
-        NSString *propertyAttribuatedString = [NSString stringWithUTF8String:propertyAttribuated];
-        NSLog(@"%@, %@", propertyNameString, propertyAttribuatedString);
-        
-        //赋值
+        //save the value
         [self setValue:value forKey:propertyNameString];
     }
 }
 
-
+/**
+ *  Reture the color that be from attribuateString containts color info
+ *
+ *  @param attribuateString color info string eg: color_e399282
+ *
+ *  @return color
+ */
 - (UIColor *)colorWithAttribuateString:(NSString *)attribuateString {
     NSArray *strings = [attribuateString componentsSeparatedByString:@"_"];
-    return [UIColor colorFromHexString:strings.lastObject];
+    return [self colorFromHexString:strings.lastObject alpha:1];
 }
 
-
+/**
+ *  Reture the font that be from attribuateString containts font info
+ *
+ *  @param attribuateString font regular string eg: font_19
+ *
+ *  @return font
+ */
 - (UIFont *)fontWithAttribuateString:(NSString *)attribuateString {
     
     NSArray *strings = [attribuateString componentsSeparatedByString:@"_"];
@@ -104,8 +119,13 @@
     if (strings.count == 3) {
         font = [UIFont systemFontOfSize:fontSize];
     }
-    else if (strings.count == 4 && [[strings[2] lowercaseString] isEqualToString:@"bold"]) { //maybe is the bold font
-        font =  [UIFont boldSystemFontOfSize:fontSize];
+    else if (strings.count == 4) { //maybe is the bold font
+        if ([[strings[2] lowercaseString] isEqualToString:@"bold"]) {
+            font =  [UIFont boldSystemFontOfSize:fontSize];
+        }
+        else {
+            font = [UIFont fontWithName:strings[2] size:fontSize];
+        }
     }
     else if (strings.count == 5){
         //IS Custome Bold
@@ -117,18 +137,16 @@
     return font;
 }
 
-@end
-
-@interface UIColor (HexColor)
-
-+ (UIColor *)colorFromHexString:(NSString *)hexString alpha:(CGFloat)alpha;
-
-@end
-
-@implementation UIColor (HexColor)
-
-+ (UIColor *)colorFromHexString:(NSString *)hexString alpha:(CGFloat)alpha
-{
+/**
+ *  color convinence init method
+ *
+ *  @param hexString color hex string
+ *  @param alpha     alpha
+ *
+ *  @return color
+ */
+- (UIColor *)colorFromHexString:(NSString *)hexString alpha:(CGFloat)alpha {
+    
     unsigned rgbValue = 0;
     hexString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
@@ -136,6 +154,5 @@
     
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:alpha];
 }
-
 
 @end
